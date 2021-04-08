@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Form{% endblock %}
+
+{% block body %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{{ path('indexcrud')}}">CRUD</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{path('indexnew')}}">Create New</a><span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <li class="form-inline my-2 my-lg-0">
+      <a class="nav-link" href="{{path('app_logout')}}"><button type="button" class="btn btn-danger">Log out</button></a><span class="sr-only">(current)</span></a>
+    </li>
+  </div>
+</nav>
+
+{% set i = 1 %}
+
+{% if i == 1 %}
+    {% for message in  app.flashes('info')%}
+            <div class="alert alert-success">
+                {{ message }}
+                {% set i = 0 %}
+            </div>
+    {% endfor %}
+{% endif %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">FirstName</th>
+      <th scope="col">LastName</th>
+      <th scope="col">Email</th>
+      <th scope="col">Mobile</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for post in posts %}
+    <tr>
+      <th>{{loop.index}}</th>
+      <th>{{post.FristName}}</th>
+      <th>{{post.LastName}}</th>
+      <th>{{post.Email}}</th>
+      <th>{{post.Mobile}}</th>
+      <th>
+      <a href="{{ path('indexview', {id: post.id}) }}"><button type="button" class="btn btn-success">View</button></a>
+      <a href="{{ path('indexdelete', {id: post.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a>
+      </th>
+    </tr>
+	{% endfor %}
+
+  </tbody>
+</table>
+<a href="{{path('indexnew')}}"><button class="btn btn-primary btn-lg btn-block">Create New!!</button></a>
+{% endblock body %}
