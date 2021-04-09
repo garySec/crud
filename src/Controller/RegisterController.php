@@ -10,41 +10,28 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Login;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use App\Service\EncodeService;
+use App\Form\RegisterType;
 class RegisterController extends AbstractController
 {
     /**
      * @Route("/register", name="register")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function index(Request $request, EncodeService $encode): Response
     {
-    	$form = $this->createFormBuilder()
-    		->add('username')
-    		->add('password', RepeatedType::class, [
-			    'type' => PasswordType::class,
-			    'required' => true,
-			    'first_options'  => ['label' => 'Password'],
-			    'second_options' => ['label' => 'Repeat Password'],
-			])
-			->add('register', SubmitType::class)
-    		->getForm()
-		;
+    		$user = new Login();
+    		$form = $this->createForm(RegisterType::class,$user);
+    		$em = $this->getDoctrine()->getManager();
 
-		$form->handleRequest($request);
-		if($form->isSubmitted()){
-			
-			$data = $form->getData();
-			$user = new Login();
+    		$form->handleRequest($request);
 
-			$user->setUsername($data['username']);
-			$user->setPassword(
-				$passwordEncoder->encodePassword($user,$data['password'])
-			);
-			$em = $this->getDoctrine()->getManager();
-			$em->persist($user);
-			$em->flush();
-			return $this->redirect($this->generateUrl('app_login'));
+    		if ($form->isSubmitted() && $form->isValid()) {
+
+                $user = $encode->Encode($user);
+                $em->persist($user);
+                $em->flush();
+
+				return $this->redirect($this->generateUrl('app_login'));
 		}
 
         return $this->render('register/index.html.twig', [

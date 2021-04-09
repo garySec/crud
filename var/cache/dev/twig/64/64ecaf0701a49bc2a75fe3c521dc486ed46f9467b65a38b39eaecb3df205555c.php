@@ -224,10 +224,6 @@ class __TwigTemplate_06222ae6552b7b52cd4c5d8dbedb3fbc39335d69420264e4c9404266c54
         echo "
   </tbody>
 </table>
-<a href=\"";
-        // line 63
-        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("indexnew");
-        echo "\"><button class=\"btn btn-primary btn-lg btn-block\">Create New!!</button></a>
 ";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
@@ -249,7 +245,7 @@ class __TwigTemplate_06222ae6552b7b52cd4c5d8dbedb3fbc39335d69420264e4c9404266c54
 
     public function getDebugInfo()
     {
-        return array (  229 => 63,  224 => 60,  206 => 56,  202 => 55,  197 => 53,  193 => 52,  189 => 51,  185 => 50,  181 => 49,  178 => 48,  161 => 47,  147 => 35,  139 => 32,  137 => 31,  133 => 30,  130 => 29,  125 => 28,  123 => 27,  120 => 26,  118 => 25,  110 => 20,  103 => 16,  92 => 8,  88 => 6,  78 => 5,  59 => 3,  36 => 1,);
+        return array (  224 => 60,  206 => 56,  202 => 55,  197 => 53,  193 => 52,  189 => 51,  185 => 50,  181 => 49,  178 => 48,  161 => 47,  147 => 35,  139 => 32,  137 => 31,  133 => 30,  130 => 29,  125 => 28,  123 => 27,  120 => 26,  118 => 25,  110 => 20,  103 => 16,  92 => 8,  88 => 6,  78 => 5,  59 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -316,7 +312,6 @@ class __TwigTemplate_06222ae6552b7b52cd4c5d8dbedb3fbc39335d69420264e4c9404266c54
 
   </tbody>
 </table>
-<a href=\"{{path('indexnew')}}\"><button class=\"btn btn-primary btn-lg btn-block\">Create New!!</button></a>
 {% endblock body %}", "crud/index.html.twig", "/var/www/html/php/sfny/templates/crud/index.html.twig");
     }
 }
