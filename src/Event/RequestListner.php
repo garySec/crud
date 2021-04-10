@@ -3,28 +3,25 @@
 namespace App\Event;
 
 use App\Entity\RequestSave;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use App\Service\ListnerService;
+use Doctrine\ORM\EntityManagerInterface;
 
 class RequestListner
 {   
-    private $em;
+    private $data;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(ListnerService $data)
     {
-          $this->em = $em;
+          $this->data = $data;
     }
-
 
     public function eventOpen($event) 
     {   
-    	//dump($event);
         $data = $event->getRequest()->request->all();
         $url = $event->getRequest()->getUri();
-        $requestSave = new RequestSave();
-        $requestSave->setUrl($url);
-        $requestSave->setParams(json_encode($data));
-        $this->em->persist($requestSave);
-        $this->em->flush();
+        $method = $event->getRequest()->getMethod();
+        $this->data->saveRequest($data,$url,$method);
+        // $this->data->saveUrl($url);
     }
 }

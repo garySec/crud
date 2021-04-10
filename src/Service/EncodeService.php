@@ -19,7 +19,6 @@ class EncodeService
 	{
 		$user->setUsername($user->getUsername());
 		$user->setPassword($this->passwordEncoder->encodePassword($user,$user->getPassword()));
-		dump($user);die;
 		return $user;
 	}
 
