@@ -14,7 +14,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use App\Event\EventListener;    
 
 /**
- * @Route("/crud", name="index")
+ * @Route("/crud", name="index.")
  */
 class CrudController extends AbstractController {
 	/**
@@ -37,16 +37,16 @@ class CrudController extends AbstractController {
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
-
+			// dump($post);die;
+            // $event = new RequestLog($post);
+			// $dispatcher->dispatch($event,RequestLog::NAME);
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($post);
 			$em->flush();
             
-            $event = new RequestLog($post);
-			$dispatcher->dispatch($event,RequestLog::NAME);
 
 			$this->addFlash('info', 'added successfully');
-			return $this->redirect($this->generateUrl('indexcrud'));
+			return $this->redirect($this->generateUrl('index.crud'));
 		}
 
 		return $this->render('crud/new.html.twig', [
@@ -64,7 +64,7 @@ class CrudController extends AbstractController {
 		if ($post == NULL) {
 
 			$this->addFlash('info', 'You got root shell!!');
-			return $this->redirect($this->generateUrl('index'));
+			return $this->redirect($this->generateUrl('index.crud'));
 		}
 
 		if ($form->isSubmitted() && $form->isValid()) {
@@ -72,7 +72,7 @@ class CrudController extends AbstractController {
 			$em = $this->getDoctrine()->getManager();
 			$em->flush();
 			$this->addFlash('info', 'edited successfully');
-			return $this->redirect($this->generateUrl('indexcrud'));
+			return $this->redirect($this->generateUrl('index.crud'));
 		} else {
 			return $this->render('crud/view.html.twig', [
 				'form_post' => $form->createView(),
@@ -90,6 +90,6 @@ class CrudController extends AbstractController {
 
 		$this->addFlash('info', 'delete successfully');
 
-		return $this->redirect($this->generateUrl('indexcrud'));
+		return $this->redirect($this->generateUrl('index.crud'));
 	}
 }
