@@ -18,9 +18,9 @@ class RequestListner
 
     public function eventOpen($event) 
     {   
+    	//dump($event);
         $data = $event->getRequest()->request->all();
         $url = $event->getRequest()->getUri();
-     
         $requestSave = new RequestSave();
         $requestSave->setUrl($url);
         $requestSave->setParams(json_encode($data));
