@@ -21,12 +21,12 @@ class ListnerService
 		{
 			$this->em = $this->em->create($this->em->getConnection(),$this->em->getConfiguration());
 		}
-
+        
         $requestSave = new RequestSave();
         $requestSave->setParams(json_encode($data));
         $requestSave->setUrl($url);
         $requestSave->setMethod($method);
         $this->em->persist($requestSave);
-        $this->em->flush();			
+        $this->em->flush();
 	}
 }

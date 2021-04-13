@@ -22,6 +22,5 @@ class RequestListner
         $url = $event->getRequest()->getUri();
         $method = $event->getRequest()->getMethod();
         $this->data->saveRequest($data,$url,$method);
-        // $this->data->saveUrl($url);
     }
 }

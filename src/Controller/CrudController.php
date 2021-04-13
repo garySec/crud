@@ -87,9 +87,7 @@ class CrudController extends AbstractController {
 
 		$em->remove($post);
 		$em->flush();
-
-		$this->addFlash('info', 'delete successfully');
-
+		$this->addFlash('info', 'Deleted successfully');
 		return $this->redirect($this->generateUrl('index.crud'));
 	}
 }

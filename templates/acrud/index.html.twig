@@ -5,7 +5,7 @@
 {% block body %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{{ path('index.crud')}}">CRUD</a>
+  <a class="navbar-brand" href="{{ path('newCrud.index')}}">CRUD</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -13,15 +13,14 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{{path('index.new')}}">Create New</a><span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{{path('newCrud.new')}}">Create New</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ path('newCrud.category')}}">Add category</a>
       </li>
     </ul>
-    <li class="form-inline my-2 my-lg-0">
-      <a class="nav-link" href="{{path('app_logout')}}"><button type="button" class="btn btn-danger">Log out</button></a><span class="sr-only">(current)</span></a>
-    </li>
   </div>
 </nav>
-
 {% set i = 1 %}
 
 {% if i == 1 %}
@@ -36,24 +35,22 @@
   <thead>
     <tr>
       <th scope="col">Id</th>
-      <th scope="col">FirstName</th>
-      <th scope="col">LastName</th>
-      <th scope="col">Email</th>
-      <th scope="col">Mobile</th>
-      <th scope="col">Actions</th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">category</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
   	{% for post in posts %}
     <tr>
       <th>{{loop.index}}</th>
-      <th>{{post.FristName}}</th>
-      <th>{{post.LastName}}</th>
-      <th>{{post.Email}}</th>
-      <th>{{post.Mobile}}</th>
+      <th>{{post.title}}</th>
+      <th>{{post.description}}</th>
+      <th>{{post.category.name}}<br>{{post.category.slug}}</th>
       <th>
-      <a href="{{ path('index.view', {id: post.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
-      <a href="{{ path('index.delete', {id: post.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a>
+      <a href="{{ path('newCrud.edit', {id: post.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
+      <a href="{{ path('newCrud.delete', {id: post.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a>
       </th>
     </tr>
 	{% endfor %}
