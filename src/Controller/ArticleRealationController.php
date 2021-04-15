@@ -28,9 +28,9 @@ class ArticleRealationController extends AbstractController
      */    
     public function index(ArticleRepository $article): Response
     {	
-        $posts = $article->findAll();
+        $articles = $article->findAll();
         return $this->render('article_realation/index.html.twig', [
-            'posts' => $posts,
+            'articles' => $articles,
         ]);
     }
 

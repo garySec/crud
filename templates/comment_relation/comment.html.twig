@@ -42,11 +42,11 @@
     </tr>
   </thead>
   <tbody>
-  	{% for post in posts %}
+  	{% for comment in comments %}
     <tr>
       <th>{{loop.index}}</th>
-      <th>{{post.name}}</th>
-      <th>{{post.discription}}</th>
+      <th>{{comments.name}}</th>
+      <th>{{comments.discription}}</th>
       <th>
       <a href="{{ path('relatition.comment.edit', {id: post.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
       </th>

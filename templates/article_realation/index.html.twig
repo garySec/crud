@@ -49,12 +49,12 @@
     </tr>
   </thead>
   <tbody>
-  	{% for post in posts %}
+  	{% for article in articles %}
     <tr>
       <th>{{loop.index}}</th>
-      <th>{{post.name}}</th>
-      <th>{{post.author}}</th>
-      <th>{{post.comment.name}}<br>{{post.comment.discription}}</th>
+      <th>{{article.name}}</th>
+      <th>{{article.author}}</th>
+      <th>{{article.comment.name}}<br>{{article.comment.discription}}</th>
       <th>
       <a href="{{ path('relatition.view', {id: post.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
       <a href="{{ path('relatition.delete', {id: post.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a>

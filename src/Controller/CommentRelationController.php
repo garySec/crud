@@ -25,11 +25,11 @@ class CommentRelationController extends AbstractController
 	 /**
      * @Route("/comment/index", name="comment.index")
      */    
-    public function commentIndex(CommentRepository $article): Response
+    public function commentIndex(CommentRepository $comment): Response
     {   
-        $posts = $article->findAll();
+        $comments = $article->findAll();
         return $this->render('comment_relation/comment.html.twig', [
-            'posts' => $posts,
+            'comments' => $comments,
         ]);
     }
     /**
