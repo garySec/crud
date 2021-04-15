@@ -20,8 +20,8 @@ class CrudController extends AbstractController {
 	/**
 	 * @Route("/", name="crud")
 	 */
-	public function index(PostRepository $postRepository): Response{
-		$posts = $postRepository->findAll();
+	public function index(PostRepository $PostRepository): Response{
+		$posts = $PostRepository->findAll();
 		return $this->render('crud/index.html.twig', [
 			'posts' => $posts,
 		]);
@@ -29,7 +29,7 @@ class CrudController extends AbstractController {
 	/**
 	 * @Route("/new", name="new")
 	 */
-	public function form(Request $request, EventDispatcherInterface $dispatcher): Response{
+	public function form(Request $request): Response{
 		$post = new Post();
 		$form = $this->createForm(PostType::class, $post);
 
@@ -37,20 +37,16 @@ class CrudController extends AbstractController {
 
 		if ($form->isSubmitted() && $form->isValid()) {
 
-			// dump($post);die;
-            // $event = new RequestLog($post);
-			// $dispatcher->dispatch($event,RequestLog::NAME);
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($post);
 			$em->flush();
             
-
 			$this->addFlash('info', 'added successfully');
 			return $this->redirect($this->generateUrl('index.crud'));
 		}
 
 		return $this->render('crud/new.html.twig', [
-			'form_post' => $form->createView(),
+			'form' => $form->createView(),
 		]);
 	}
 	/**
@@ -75,7 +71,7 @@ class CrudController extends AbstractController {
 			return $this->redirect($this->generateUrl('index.crud'));
 		} else {
 			return $this->render('crud/view.html.twig', [
-				'form_post' => $form->createView(),
+				'form' => $form->createView(),
 			]);
 		}
 	}

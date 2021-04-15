@@ -14,9 +14,11 @@
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}
     </head>
-    <body><div class="container pt-5">
-        
-        {% block body %}{% endblock %}
+    <body>
+    <a href="{{ path('choose_crud')}}"><button class="btn">Change Crud</button></a>
+    <div class="container pt-5">
+        {% block body %}
+        {% endblock %}
     </div>
     </body>
 </html>

@@ -3,9 +3,8 @@
 {% block title %}Form{% endblock %}
 
 {% block body %}
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="{{ path('newCrud.index')}}">CRUD</a>
+  <a class="navbar-brand" href="{{ path('relatition.index')}}">CRUD</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -13,13 +12,15 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{{path('newCrud.new')}}">Create New</a>
+        <a class="nav-link" href="{{path('relatition.comment.index')}}">Comment</a><span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="{{ path('newCrud.category')}}">Add category</a>
+        <a class="nav-link" href="{{path('relatition.comment.new')}}">Add Comment</a><span class="sr-only">(current)</span></a>
       </li>
     </ul>
-  </div>
+    <li class="form-inline my-2 my-lg-0">
+      <a class="nav-link" href="{{path('app_logout')}}"><button type="button" class="btn btn-danger">Log out</button></a><span class="sr-only">(current)</span></a>
+    </li>
 </nav>
 {% set i = 1 %}
 
@@ -35,9 +36,8 @@
   <thead>
     <tr>
       <th scope="col">Id</th>
-      <th scope="col">Title</th>
-      <th scope="col">Description</th>
-      <th scope="col">category</th>
+      <th scope="col">Name</th>
+      <th scope="col">Discription</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
@@ -45,15 +45,14 @@
   	{% for post in posts %}
     <tr>
       <th>{{loop.index}}</th>
-      <th>{{post.title}}</th>
-      <th>{{post.description}}</th>
-      <th>{{post.category.name}}<br>{{post.category.slug}}</th>
+      <th>{{post.name}}</th>
+      <th>{{post.discription}}</th>
       <th>
-      <a href="{{ path('newCrud.edit', {id: post.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
-      <a href="{{ path('newCrud.delete', {id: post.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a>
+      <a href="{{ path('relatition.comment.edit', {id: post.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
       </th>
     </tr>
 	{% endfor %}
   </tbody>
 </table>
+</div>
 {% endblock body %}

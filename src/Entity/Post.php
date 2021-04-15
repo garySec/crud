@@ -20,20 +20,20 @@ class Post
 
     /**
     * @Assert\Regex(
-    *     pattern="/\d/",
-    *     match=false,
-    *     message="Your Frist name cannot contain a number"
+    *     pattern="/[a-zA-Z]+/i",
+    *     match=true,
+    *     message="Your Name cannot contain a number"
     * )
     * @Assert\Type("string")
-    *@Assert\NotBlank
+    * @Assert\NotBlank
     * @ORM\Column(type="string", length=255)
     */
     protected $FristName;
 
     /**
     * @Assert\Regex(
-    *     pattern="/\d/",
-    *     match=false,
+    *     pattern="/[a-zA-Z]+/i",
+    *     match=true,
     *     message="Your Last name cannot contain a number"
     * )
     *@Assert\NotBlank
@@ -54,8 +54,8 @@ class Post
     * @Assert\Length(
     *      min = 10,
     *      max = 10,
-    *      minMessage = "Your first name must be at least {{ limit }} characters long",
-    *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
+    *      minMessage = "Your Mobile must be at least {{ limit }} characters long",
+    *      maxMessage = "Your Mobile cannot be longer than {{ limit }} characters"
     * )
     *@Assert\NotBlank
     * @ORM\Column(type="string", length=255)
