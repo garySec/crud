@@ -2,16 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserTypeRepository;
+use App\Repository\UserHobbieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 /**
- * @ORM\Entity(repositoryClass=UserTypeRepository::class)
+ * @ORM\Entity(repositoryClass=UserHobbieRepository::class)
  */
-class UserType
+class UserHobbie
 {
     /**
      * @ORM\Id
@@ -23,10 +22,10 @@ class UserType
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $type;
+    private $hobbie;
 
     /**
-     * @ORM\OneToMany(targetEntity=UserData::class, mappedBy="userType", orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity=UserData::class, mappedBy="hobbie")
      */
     private $user;
 
@@ -40,14 +39,14 @@ class UserType
         return $this->id;
     }
 
-    public function getType(): ?string
+    public function getHobbie(): ?string
     {
-        return $this->type;
+        return $this->hobbie;
     }
 
-    public function setType(string $type): self
+    public function setHobbie(string $hobbie): self
     {
-        $this->type = $type;
+        $this->hobbie = $hobbie;
 
         return $this;
     }
@@ -64,7 +63,7 @@ class UserType
     {
         if (!$this->user->contains($user)) {
             $this->user[] = $user;
-            $user->setUserType($this);
+            $user->addHobbie($this);
         }
 
         return $this;
@@ -73,17 +72,13 @@ class UserType
     public function removeUser(UserData $user): self
     {
         if ($this->user->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getUserType() === $this) {
-                $user->setUserType(null);
-            }
+            $user->removeHobbie($this);
         }
 
         return $this;
     }
-
     public function __toString()
     {
-        return $this->type;
+        return $this->hobbie;
     }
 }

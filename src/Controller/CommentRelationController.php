@@ -31,7 +31,7 @@ class CommentRelationController extends AbstractController
 
 
         return $this->render('comment_relation/comment.html.twig', [
-            'comments' => $comments,
+            'comments' => $data,
         ]);
     }
     /**

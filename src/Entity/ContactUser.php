@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ContactUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\UserData;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ContactUserRepository::class)
@@ -19,11 +20,21 @@ class ContactUser
     private $id;
 
     /**
+     * @Assert\Range(
+     *      min = 10,
+     *      max = 10,
+     *      notInRangeMessage = "Number must be {{ min }}."
+     * )
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $mobile;
 
     /**
+    * @Assert\Email(
+    *     message = "The email '{{ value }}' is not a valid email."
+    * )
+    * @Assert\NotBlank 
      * @ORM\Column(type="string", length=255)
      */
     private $email;

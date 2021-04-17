@@ -45,10 +45,10 @@
   	{% for comment in comments %}
     <tr>
       <th>{{loop.index}}</th>
-      <th>{{comments.name}}</th>
-      <th>{{comments.discription}}</th>
+      <th>{{comment.name}}</th>
+      <th>{{comment.discription}}</th>
       <th>
-      <a href="{{ path('relatition.comment.edit', {id: post.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
+      <a href="{{ path('relatition.comment.edit', {id: comment.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
       </th>
     </tr>
 	{% endfor %}

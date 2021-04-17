@@ -6,6 +6,7 @@ use App\Repository\AddressUserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AddressUserRepository::class)
@@ -20,21 +21,36 @@ class AddressUser
     private $id;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $address1;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $address2;
 
+    
     /**
+    * @Assert\Regex(
+    *     pattern="/[a-zA-Z]+/i",
+    *     match=true,
+    *     message="Your name cannot contain a number"
+    * )
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $fullname;
     
     /**
+     * @Assert\Range(
+     *      min = 6,
+     *      max = 6,
+     *      notInRangeMessage = "Pincode must be {{ min }}.",
+     * )
+     * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
     private $pincode;

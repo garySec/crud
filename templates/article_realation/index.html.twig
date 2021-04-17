@@ -56,8 +56,8 @@
       <th>{{article.author}}</th>
       <th>{{article.comment.name}}<br>{{article.comment.discription}}</th>
       <th>
-      <a href="{{ path('relatition.view', {id: post.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
-      <a href="{{ path('relatition.delete', {id: post.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a>
+      <a href="{{ path('relatition.view', {id: article.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
+      <a href="{{ path('relatition.delete', {id: article.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a>
       </th>
     </tr>
 	{% endfor %}

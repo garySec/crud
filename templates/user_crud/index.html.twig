@@ -32,6 +32,7 @@
             </div>
     {% endfor %}
 {% endif %}
+<div class="table-responsive">
 <table class="table">
   <thead>
     <tr>
@@ -41,6 +42,8 @@
       <th scope="col">Mobile</th>
       <th scope="col">email</th>
       <th scope="col">Address</th>
+      <th scope="col">UserType</th>
+      <th scope="col">Hobbies</th>
       <th scope="col">Gender</th>
       <th scope="col">Actions</th>
     </tr>
@@ -53,9 +56,16 @@
       <th>{{post.lastname}}</th>
       <th>{{post.contact.mobile}}</th>
       <th>{{post.contact.email}}</th>
-      <th>{{post.address.fullname}}<br>
-          {{post.address.address1}}<br>
-          {{post.address.address2}}
+      <th><lable>Full name : </lable>{{post.address.fullname}}<lable>,</lable><br>
+          <lable>Address 1 : </lable>{{post.address.address1}}<lable>,</lable><br>
+          <lable>Address 2 : </lable>{{post.address.address2}}<lable>,</lable><br>
+          <lable>Pincode : </lable>{{post.address.pincode}}
+      </th>
+      <th>{{post.userType.type}}</th>
+      <th>
+        {% for hob in post.hobbie %}
+          {{ hob.hobbie}}<br>
+        {% endfor %}
       </th>
       <th>{{post.gender}}</th>
       <th>

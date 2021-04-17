@@ -11,6 +11,7 @@ use App\Form\AddressUserType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class UserDataType extends AbstractType
 {
@@ -21,11 +22,16 @@ class UserDataType extends AbstractType
             ->add('lastname')
             ->add('contact',ContactUserType::class)
             ->add('address',AddressUserType::class)
+            ->add('userType')
             ->add('gender', ChoiceType::class,[
                    'choices' => ['Male' => 'Male', 'Female' => "Female",'Other' => 'Other'],
                    'expanded' => true
                 ]
             )
+            ->add('hobbie',NULL,[
+                'multiple' => true,
+                'expanded' => true
+            ])
 
             ->add('submit',SubmitType::class)
         ;

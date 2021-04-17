@@ -28,17 +28,4 @@ class AppFixtures extends Fixture
         $manager->persist($user);
         $manager->flush();
     }
-
-    public function addUserType(ObjectManager $manager)
-    {
-        $data = new UserType();
-
-        $data->setType('Admin');
-        $data->setType('Customer');
-        $data->setType('Supllier');
-        $data->setType('Visiter');
-        
-        $manager->persist($data);
-        $manager->flush();
-    }
 }
