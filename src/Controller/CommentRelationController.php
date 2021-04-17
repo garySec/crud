@@ -15,7 +15,7 @@ use App\Repository\TagRepository;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use App\Form\TagType;
-
+use Knp\Component\Pager\PaginatorInterface;
      /**
      * @Route("/relatitionship", name="relatition.")
      */
@@ -25,9 +25,11 @@ class CommentRelationController extends AbstractController
 	 /**
      * @Route("/comment/index", name="comment.index")
      */    
-    public function commentIndex(CommentRepository $comment): Response
+    public function commentIndex(Request $request): Response
     {   
-        $comments = $article->findAll();
+        $data = $this->getDoctrine()->getRepository(Comment::class)->findAll();
+
+
         return $this->render('comment_relation/comment.html.twig', [
             'comments' => $comments,
         ]);

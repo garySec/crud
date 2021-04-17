@@ -12,7 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use App\Event\EventListener;    
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Knp\Component\Pager\PaginatorInterface;
 /**
  * @Route("/crud", name="index.")
  */
@@ -20,8 +21,17 @@ class CrudController extends AbstractController {
 	/**
 	 * @Route("/", name="crud")
 	 */
-	public function index(PostRepository $PostRepository): Response{
-		$posts = $PostRepository->findAll();
+	public function index(Request $request,PaginatorInterface $paginator): Response{
+
+		$data = $this->getDoctrine()->getManager()->getRepository(Post::class)->findAll();
+
+		$posts = $paginator->paginate(
+
+			$data,
+			$request->query->getInt('page',1),
+			// $request->query->getInt('limit',5)
+		);
+
 		return $this->render('crud/index.html.twig', [
 			'posts' => $posts,
 		]);
@@ -33,10 +43,11 @@ class CrudController extends AbstractController {
 		$post = new Post();
 		$form = $this->createForm(PostType::class, $post);
 
+			
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
-
+		
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($post);
 			$em->flush();
@@ -78,9 +89,16 @@ class CrudController extends AbstractController {
 	/**
 	 * @Route("/delete/{id}", name="delete")
 	 */
-	public function delete(Post $post): Response{
-		$em = $this->getDoctrine()->getManager();
+	public function delete($id): Response{
 
+		$post = $this->getDoctrine()->getRepository(Post::class)->find($id);
+
+		if (!$post) {
+			$this->addFlash('info', 'No data exists!');
+			return $this->redirect($this->generateUrl('index.crud'));
+		}
+
+		$em = $this->getDoctrine()->getManager();
 		$em->remove($post);
 		$em->flush();
 		$this->addFlash('info', 'Deleted successfully');
