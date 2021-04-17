@@ -24,7 +24,6 @@ class CrudController extends AbstractController {
 	public function index(Request $request,PaginatorInterface $paginator): Response{
 
 		$data = $this->getDoctrine()->getManager()->getRepository(Post::class)->findAll();
-
 		$posts = $paginator->paginate(
 
 			$data,

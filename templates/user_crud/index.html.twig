@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserCrudController!{% endblock %}
+
+{% block body %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{{ path('advance.index')}}">CRUD</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{path('advance.new')}}">Create New</a><span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <li class="form-inline my-2 my-lg-0">
+      <a class="nav-link" href="{{path('app_logout')}}"><button type="button" class="btn btn-danger">Log out</button></a><span class="sr-only">(current)</span></a>
+    </li>
+  </div>
+</nav>
+
+{% set i = 1 %}
+
+{% if i == 1 %}
+    {% for message in  app.flashes('info')%}
+            <div class="alert alert-success">
+                {{ message }}
+                {% set i = 0 %}
+            </div>
+    {% endfor %}
+{% endif %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Lastname</th>
+      <th scope="col">Mobile</th>
+      <th scope="col">email</th>
+      <th scope="col">Address</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for post in posts %}
+    <tr>
+      <th>{{loop.index}}</th>
+      <th>{{post.name}}</th>
+      <th>{{post.lastname}}</th>
+      <th>{{post.contact.mobile}}</th>
+      <th>{{post.contact.email}}</th>
+      <th>{{post.address.fullname}}<br>
+          {{post.address.address1}}<br>
+          {{post.address.address2}}
+      </th>
+      <th>{{post.gender}}</th>
+      <th>
+      <a href="{{ path('advance.edit', {id: post.id}) }}"><button type="button" class="btn btn-success">Edit</button></a>
+      <a href="{{ path('advance.delete', {id: post.id}) }}"><button type="button" class="btn btn-danger">Delete</button></a>
+      </th>
+    </tr>
+	{% endfor %}
+  </tbody>
+</table>
+<div>
+  
+    {{ knp_pagination_render(posts) }}
+
+</div>
+{% endblock %}
