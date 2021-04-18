@@ -11,6 +11,8 @@ use App\Repository\UserDataRepository;
 use App\Form\UserDataType;
 use App\Entity\UserData;
 use App\Entity\ContactUser;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
      /**
      * @Route("/advance", name="advance.")
@@ -27,7 +29,7 @@ class UserCrudController extends AbstractController
 		$posts = $paginator->paginate(
 			$data,
 			$request->query->getInt('page',1),
-			// $request->query->getInt('limit',5)
+			$request->query->getInt('limit',5)
 		);
 
         return $this->render('user_crud/index.html.twig', [
@@ -40,6 +42,7 @@ class UserCrudController extends AbstractController
      */
      public function new(Request $request)
      {
+
      	$em = $this->getDoctrine()->getManager();
 
      	$post = new UserData();
@@ -54,7 +57,7 @@ class UserCrudController extends AbstractController
      	          
      		$this->addFlash('info', 'added successfully');
      		return $this->redirect($this->generateUrl('advance.index'));
-     	}
+        }
 
      	return $this->render('user_crud/new.html.twig', [
      		'form' => $form->createView(),
@@ -105,4 +108,45 @@ class UserCrudController extends AbstractController
 		$this->addFlash('info', 'Deleted successfully');
 		return $this->redirect($this->generateUrl('advance.index'));
 	}
+
+     /**
+     * @Route("/search", name="search")
+     */
+    public function searchBar()
+    {
+        $form = $this->createFormBuilder()
+                ->setAction($this->generateUrl('advance.result'))
+                ->add('search',TextType::class)
+                ->add('save',SubmitType::class)
+                ->getForm();
+
+        return $this->render('user_crud/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+     /**
+     * @Route("/result", name="result")
+     */
+    public function handleSearch(PaginatorInterface $paginator,Request $request,UserDataRepository $userdata)
+    {
+        $search = $request->request->get('form')['search'];
+        // $data = $userdata->findBy(
+        //             array('name'=>$search),
+        //             array('contact'=>$search),
+        //         );
+
+
+        $data = $userdata->findAll($search);
+        $posts = $paginator->paginate(
+            $data,
+            $request->query->getInt('page',1),
+            // $request->query->getInt('limit',5)
+        );
+
+        return $this->render('user_crud/index.html.twig',[
+            'posts' => $posts
+        ]);
+
+    }
 }
