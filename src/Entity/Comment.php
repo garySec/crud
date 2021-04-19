@@ -28,8 +28,8 @@ class Comment
     * )
     * @Assert\Type("string")
     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=255)
-     */
+    * @ORM\Column(type="string", length=255)
+    */
     private $name;
 
     /**
@@ -45,6 +45,7 @@ class Comment
     private $discription;
 
     /**
+     * @Assert\Valid
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="comment")
      */
     private $articles;

@@ -39,8 +39,8 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Name</th>
+      <th scope="col">{{ knp_pagination_sortable(posts,'Id','post.id')}}</th>
+      <th scope="col">{{ knp_pagination_sortable(posts,'Name','post.name')}}</th>
       <th scope="col">Lastname</th>
       <th scope="col">Mobile</th>
       <th scope="col">email</th>

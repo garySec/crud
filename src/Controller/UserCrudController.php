@@ -25,7 +25,7 @@ class UserCrudController extends AbstractController
     public function index(Request $request,PaginatorInterface $paginator): Response
     {	
     	$data = $this->getDoctrine()->getManager()->getRepository(UserData::class)->findAll();
-        // dd($data);
+
 		$posts = $paginator->paginate(
 			$data,
 			$request->query->getInt('page',1),
