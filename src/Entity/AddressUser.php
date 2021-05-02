@@ -24,15 +24,8 @@ class AddressUser
      * @Assert\NotBlank
      * @ORM\Column(type="string", length=255)
      */
-    private $address1;
+    private $address;
 
-    /**
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=255)
-     */
-    private $address2;
-
-    
     /**
     * @Assert\Regex(
     *     pattern="/[a-zA-Z]+/i",
@@ -56,40 +49,24 @@ class AddressUser
     private $pincode;
 
     /**
-     * @ORM\OneToMany(targetEntity=UserData::class, mappedBy="address")
+     * @ORM\ManyToOne(targetEntity=UserData::class, inversedBy="address")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $user;
-
-    public function __construct()
-    {
-        $this->user = new ArrayCollection();
-    }
+    private $userData;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getAddress1(): ?string
+    public function getAddress(): ?string
     {
-        return $this->address1;
+        return $this->address;
     }
 
-    public function setAddress1(string $address1): self
+    public function setAddress(string $address): self
     {
-        $this->address1 = $address1;
-
-        return $this;
-    }
-
-    public function getAddress2(): ?string
-    {
-        return $this->address2;
-    }
-
-    public function setAddress2(string $address2): self
-    {
-        $this->address2 = $address2;
+        $this->address = $address;
 
         return $this;
     }
@@ -118,32 +95,14 @@ class AddressUser
         return $this;
     }
 
-    /**
-     * @return Collection|UserData[]
-     */
-    public function getUser(): Collection
+    public function getUserData(): ?UserData
     {
-        return $this->user;
+        return $this->userData;
     }
 
-    public function addUser(UserData $user): self
+    public function setUserData(?UserData $userData): self
     {
-        if (!$this->user->contains($user)) {
-            $this->user[] = $user;
-            $user->setAddress($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(UserData $user): self
-    {
-        if ($this->user->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getAddress() === $this) {
-                $user->setAddress(null);
-            }
-        }
+        $this->userData = $userData;
 
         return $this;
     }

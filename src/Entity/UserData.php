@@ -53,18 +53,11 @@ class UserData
     /**
      * @ORM\OneToOne(targetEntity="ContactUser", inversedBy="user", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="contanct_id",nullable=false,referencedColumnName="id")
-     * @Assert\Valid
+     * @Assert\Valid(traverse=true)
      */
     private $contact;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=AddressUser::class, inversedBy="user",cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false,name="addr_id")
-     * @Assert\Valid
-     */
-    private $address;
-
-    /**
+     /**
      * @Assert\Valid
      * @ORM\ManyToOne(targetEntity=UserType::class, inversedBy="user")
      * @ORM\JoinColumn(nullable=false)
@@ -78,9 +71,15 @@ class UserData
      */
     private $hobbie;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AddressUser::class, mappedBy="userData",cascade={"persist"})
+     */
+    private $address;
+
     public function __construct()
     {
         $this->hobbie = new ArrayCollection();
+        $this->address = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -136,18 +135,6 @@ class UserData
         return $this;
     }
 
-    public function getAddress(): ?AddressUser
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?AddressUser $address): self
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
     public function getUserType(): ?UserType
     {
         return $this->userType;
@@ -183,4 +170,35 @@ class UserData
 
         return $this;
     }
-}
+
+    /**
+     * @return Collection|AddressUser[]
+     */
+    public function getAddress(): Collection
+    {
+        return $this->address;
+    }
+
+    public function addAddress(AddressUser $address): self
+    {
+        if (!$this->address->contains($address)) {
+            $this->address[] = $address;
+            $address->setUserData($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAddress(AddressUser $address): self
+    {
+        if ($this->address->removeElement($address)) {
+            // set the owning side to null (unless already changed)
+            if ($address->getUserData() === $this) {
+                $address->setUserData(null);
+            }
+        }
+
+        return $this;
+    }
+
+   }

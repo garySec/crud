@@ -3,7 +3,27 @@
 {% block title %}Add{% endblock %}
 
 {% block body %}
-	
-	{{ form(form) }}
-	
+				
+{{ form_start(form) }}
+
+    {# {{form_row(form.name)}} #}
+    {# {{form_row(form.lastname)}} #}
+    {# {{form_row(form.contact)}} #}
+
+    <ul class="tags" id = "addr_id" data-prototype="{{ form_widget(form.address.vars.prototype)|e('html_attr') }}">
+    
+    {% for row in form.address %}
+
+        {{ form_row(row) }}
+
+    {% endfor %}
+
+    </ul>
+
+    {# {{form_row(form.userType)}} #}
+    {# {{form_row(form.gender)}} #}
+    {# {{form_row(form.hobbie)}} #}
+
+{{ form_end(form) }}
+
 {% endblock body %}

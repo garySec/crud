@@ -12,8 +12,7 @@ class AddressUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('address1')
-            ->add('address2')
+            ->add('address')
             ->add('fullname')
             ->add('pincode')
         ;

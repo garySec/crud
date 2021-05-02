@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class UserDataType extends AbstractType
 {
@@ -19,15 +20,27 @@ class UserDataType extends AbstractType
     {
         $builder
             ->add('name')
+
             ->add('lastname')
-            ->add('contact',ContactUserType::class)
-            ->add('address',AddressUserType::class)
+
+            ->add('contact',ContactUserType::class, ['error_bubbling' => true])
+           
+            ->add('address',CollectionType::class, [
+                    'entry_type' => AddressUserType::class,
+                    'entry_options' => ['label' => false],
+                    'by_reference' => false,
+                    'allow_add' => true,
+                    'allow_delete' => true
+              ])
+            
             ->add('userType')
+
             ->add('gender', ChoiceType::class,[
                    'choices' => ['Male' => 'Male', 'Female' => "Female",'Other' => 'Other'],
                    'expanded' => true
                 ]
             )
+
             ->add('hobbie',NULL,[
                 'multiple' => true,
                 'expanded' => true

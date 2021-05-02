@@ -59,10 +59,10 @@
       <th>{{post.lastname}}</th>
       <th>{{post.contact.mobile}}</th>
       <th>{{post.contact.email}}</th>
-      <th><lable>Full name : </lable>{{post.address.fullname}}<lable>,</lable><br>
-          <lable>Address 1 : </lable>{{post.address.address1}}<lable>,</lable><br>
-          <lable>Address 2 : </lable>{{post.address.address2}}<lable>,</lable><br>
-          <lable>Pincode : </lable>{{post.address.pincode}}
+      {# {{ dump(post)}} #}
+      {# <th><lable>Full name : </lable>{{post.address.fullname}}<lable>,</lable><br> #}
+          {# <lable>Address  : </lable>{{post.address.address}}<lable>,</lable><br> #}
+          {# <lable>Pincode : </lable>{{post.address.pincode}} #}
       </th>
       <th>{{post.userType.type}}</th>
       <th>

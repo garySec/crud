@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\UserDataRepository;
 use App\Form\UserDataType;
 use App\Entity\UserData;
+use App\Entity\AddressUser;
 use App\Entity\ContactUser;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -45,14 +46,17 @@ class UserCrudController extends AbstractController
 
      	$em = $this->getDoctrine()->getManager();
 
-     	$post = new UserData();
-     	$form = $this->createForm(UserDataType::class,$post);
-     	$form->handleRequest($request);
+     	$user = new UserData();
 
-     	if ($form->isSubmitted() && $form->isValid()) {
+     	$form = $this->createForm(UserDataType::class,$user);
+     	$form->handleRequest($request);
+     	
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // dd($user); 
 
      		$em = $this->getDoctrine()->getManager();
-     		$em->persist($post);
+     		$em->persist($user);
      		$em->flush();
      	          
      		$this->addFlash('info', 'added successfully');
