@@ -74,12 +74,42 @@ class UserData
     /**
      * @ORM\OneToMany(targetEntity=AddressUser::class, mappedBy="userData",cascade={"persist"})
      */
-    private $address;
+    private $addr;
 
     public function __construct()
     {
+        $this->addr = new ArrayCollection();
         $this->hobbie = new ArrayCollection();
-        $this->address = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|AddressUser[]
+     */
+    public function getAddr(): Collection
+    {
+        return $this->addr;
+    }
+
+    public function addAddr(AddressUser $addr): self
+    {
+        if (!$this->addr->contains($addr)) {
+            $this->addr[] = $addr;
+            $addr->setUserData($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAddr(AddressUser $addr): self
+    {
+        if ($this->addr->removeElement($addr)) {
+            // set the owning side to null (unless already changed)
+            if ($addr->getUserData() === $this) {
+                $addr->setUserData(null);
+            }
+        }
+
+        return $this;
     }
 
     public function getId(): ?int
@@ -167,36 +197,6 @@ class UserData
     public function removeHobbie(UserHobbie $hobbie): self
     {
         $this->hobbie->removeElement($hobbie);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|AddressUser[]
-     */
-    public function getAddress(): Collection
-    {
-        return $this->address;
-    }
-
-    public function addAddress(AddressUser $address): self
-    {
-        if (!$this->address->contains($address)) {
-            $this->address[] = $address;
-            $address->setUserData($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAddress(AddressUser $address): self
-    {
-        if ($this->address->removeElement($address)) {
-            // set the owning side to null (unless already changed)
-            if ($address->getUserData() === $this) {
-                $address->setUserData(null);
-            }
-        }
 
         return $this;
     }

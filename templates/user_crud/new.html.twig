@@ -6,24 +6,81 @@
 				
 {{ form_start(form) }}
 
-    {# {{form_row(form.name)}} #}
-    {# {{form_row(form.lastname)}} #}
-    {# {{form_row(form.contact)}} #}
+    {{form_row(form.name)}}
+    {{form_row(form.lastname)}}
+    {{form_row(form.contact)}}
 
-    <ul class="tags" id = "addr_id" data-prototype="{{ form_widget(form.address.vars.prototype)|e('html_attr') }}">
+    <ul class="tags" id = "addr_id" data-prototype="{{ form_widget(form.addr.vars.prototype)|e('html_attr') }}">
     
-    {% for row in form.address %}
+    {% for row in form.addr %}
 
         {{ form_row(row) }}
 
     {% endfor %}
+       <script type="text/javascript">var $addTagLink = $('<button type="button" class="add_tag_link btn btn-primary" data-collection-holder-class="tags">Add a tag</button>');</script>
 
     </ul>
 
-    {# {{form_row(form.userType)}} #}
-    {# {{form_row(form.gender)}} #}
-    {# {{form_row(form.hobbie)}} #}
+    {{form_row(form.userType)}}
+    {{form_row(form.gender)}}
+    {{form_row(form.hobbie)}}
 
 {{ form_end(form) }}
 
+<script type="text/javascript">
+
+var $newLinkLi = $('<li></li>').append($addTagLink);
+
+jQuery(document).ready(function() {
+
+   var $collectionHolder = $('ul.tags');
+    
+
+    $collectionHolder.append($newLinkLi);
+    
+
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+    
+    $addTagLink.on('click', function(e) {
+
+        e.preventDefault();
+        
+
+        addTagForm($collectionHolder, $newLinkLi);
+    });
+    
+    
+});
+
+function addTagForm($collectionHolder, $newLinkLi) {
+
+    var prototype = $collectionHolder.data('prototype');
+    
+
+    var index = $collectionHolder.data('index');
+    
+
+    var newForm = prototype.replace(/__name__/g, index);
+    
+
+    $collectionHolder.data('index', index + 1);
+    
+
+    var $newFormLi = $('<li></li>').append(newForm);
+    
+
+    $newFormLi.append('<button href="#" class="remove-tag btn btn-danger">remove</button>');
+    
+    $newLinkLi.before($newFormLi);
+    
+
+    $('.remove-tag').click(function(e) {
+        e.preventDefault();
+        
+        $(this).parent().remove();
+        
+        return false;
+    });
+}
+</script>
 {% endblock body %}

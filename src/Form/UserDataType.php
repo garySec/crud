@@ -25,12 +25,12 @@ class UserDataType extends AbstractType
 
             ->add('contact',ContactUserType::class, ['error_bubbling' => true])
            
-            ->add('address',CollectionType::class, [
+            ->add('addr',CollectionType::class, [
                     'entry_type' => AddressUserType::class,
                     'entry_options' => ['label' => false],
-                    'by_reference' => false,
                     'allow_add' => true,
-                    'allow_delete' => true
+                    'allow_delete' => true,
+                    'by_reference' => false,
               ])
             
             ->add('userType')

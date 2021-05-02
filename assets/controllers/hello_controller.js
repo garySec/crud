@@ -19,45 +19,48 @@ import { Controller } from 'stimulus';
 }
 */
 
-var $addButton = $('<a href="#" class="add_tag_link btn btn-info">Add a Address</a>');
-var $newLinkL = $('<li></li>').append($addButton);
+// var $addButton = $('<a href="#" class="add_tag_link btn btn-info">Add a Address</a>');
+// var $newLinkL = $('<li></li>').append($addButton);
 
-jQuery(document).ready(function() {
-   var $collectionHolder = $('ul.tags');
-    
-    $collectionHolder.append($newLinkL);
-    
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-    
-    $addButton.on('click', function(e) {
-        e.preventDefault();
-        
-        addTagForm($collectionHolder, $newLinkL);
-    });
-    
-    
-});
+// jQuery(document).ready(function() {
+//     // Get the ul that holds the collection of tags
+//     var $tagsCollectionHolder = $('ul.tags');
+//     // count the current form inputs we have (e.g. 2), use that as the new
+//     // index when inserting a new item (e.g. 2)
+//     $tagsCollectionHolder.data('index', $tagsCollectionHolder.find('input').length);
 
-function addTagForm($collectionHolder, $newLinkL) {
-    var prototype = $collectionHolder.data('prototype');
-    
-    var index = $collectionHolder.data('index');
-    
-    var newForm = prototype.replace(/__name__/g, index);
-    
-    $collectionHolder.data('index', index + 1);
-    
-    var $newFormLi = $('<li></li>').append(newForm);
-    
-    $newFormLi.append('<a href="#" class="remove-tag btn btn-danger	">Remove</a>');
-    
-    $newLinkL.before($newFormLi);
-    
-    $('.remove-tag').click(function(e) {
-        e.preventDefault();
-        
-        $(this).parent().remove();
-        
-        return false;
-    });
-}
+//     $('body').on('click', '.add_item_link', function(e) {
+//         var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
+//         // add a new tag form (see next code block)
+//         addFormToCollection($collectionHolderClass);
+//     })
+// });
+
+// function addFormToCollection($collectionHolderClass) {
+//     // Get the ul that holds the collection of tags
+//     var $collectionHolder = $('.' + $collectionHolderClass);
+
+//     // Get the data-prototype explained earlier
+//     var prototype = $collectionHolder.data('prototype');
+
+//     // get the new index
+//     var index = $collectionHolder.data('index');
+
+//     var newForm = prototype;
+//     // You need this only if you didn't set 'label' => false in your tags field in TaskType
+//     // Replace '__name__label__' in the prototype's HTML to
+//     // instead be a number based on how many items we have
+//     // newForm = newForm.replace(/__name__label__/g, index);
+
+//     // Replace '__name__' in the prototype's HTML to
+//     // instead be a number based on how many items we have
+//     newForm = newForm.replace(/__name__/g, index);
+
+//     // increase the index with one for the next item
+//     $collectionHolder.data('index', index + 1);
+
+//     // Display the form in the page in an li, before the "Add a tag" link li
+//     var $newFormLi = $('<li></li>').append(newForm);
+//     // Add the new form at the end of the list
+//     $collectionHolder.append($newFormLi)
+// }

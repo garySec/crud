@@ -59,10 +59,18 @@
       <th>{{post.lastname}}</th>
       <th>{{post.contact.mobile}}</th>
       <th>{{post.contact.email}}</th>
-      {# {{ dump(post)}} #}
-      {# <th><lable>Full name : </lable>{{post.address.fullname}}<lable>,</lable><br> #}
-          {# <lable>Address  : </lable>{{post.address.address}}<lable>,</lable><br> #}
-          {# <lable>Pincode : </lable>{{post.address.pincode}} #}
+
+      <th>
+        
+        {% for row in post.addr %}
+
+        <lable>Full name : </lable>{{row.fullname}}<lable>,</lable><br>
+          <lable>Address  : </lable>{{row.address}}<lable>,</lable><br>
+          <lable>Pincode : </lable>{{row.pincode}}
+          <hr>
+          <br>
+        {% endfor %}
+
       </th>
       <th>{{post.userType.type}}</th>
       <th>

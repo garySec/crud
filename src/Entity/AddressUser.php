@@ -49,10 +49,22 @@ class AddressUser
     private $pincode;
 
     /**
-     * @ORM\ManyToOne(targetEntity=UserData::class, inversedBy="address")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity=UserData::class, inversedBy="addr")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $userData;
+
+    public function getUserData(): ?UserData
+    {
+        return $this->userData;
+    }
+
+    public function setUserData(?UserData $userData): self
+    {
+        $this->userData = $userData;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -95,15 +107,11 @@ class AddressUser
         return $this;
     }
 
-    public function getUserData(): ?UserData
+    public function __toString()
     {
-        return $this->userData;
+        return $this->fullname;
+        return $this->address;
+        return $this->pincode;
     }
 
-    public function setUserData(?UserData $userData): self
-    {
-        $this->userData = $userData;
-
-        return $this;
-    }
 }

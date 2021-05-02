@@ -53,8 +53,6 @@ class UserCrudController extends AbstractController
      	
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // dd($user); 
-
      		$em = $this->getDoctrine()->getManager();
      		$em->persist($user);
      		$em->flush();
