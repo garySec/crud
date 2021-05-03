@@ -65,17 +65,16 @@
         {% for row in post.addr %}
 
         <lable>Full name : </lable>{{row.fullname}}<lable>,</lable><br>
-          <lable>Address  : </lable>{{row.address}}<lable>,</lable><br>
-          <lable>Pincode : </lable>{{row.pincode}}
+          <lable>Address{{loop.index}}  : </lable>{{row.address}}<lable>,</lable><br>
+          <lable>Pincode{{loop.index}} : </lable>{{row.pincode}}
           <hr>
-          <br>
         {% endfor %}
 
       </th>
       <th>{{post.userType.type}}</th>
       <th>
         {% for hob in post.hobbie %}
-          {{ hob.hobbie}}<br>
+          {{ hob.hobbie}}<hr>
         {% endfor %}
       </th>
       <th>{{post.gender}}</th>

@@ -49,6 +49,7 @@ class AddressUser
     private $pincode;
 
     /**
+     * Assert\Valid()
      * @ORM\ManyToOne(targetEntity=UserData::class, inversedBy="addr")
      * @ORM\JoinColumn(nullable=false)
      */

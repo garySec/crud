@@ -31,6 +31,7 @@ class UserDataType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'by_reference' => false,
+                    'empty_data'=> false,
               ])
             
             ->add('userType')

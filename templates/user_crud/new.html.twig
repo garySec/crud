@@ -3,23 +3,22 @@
 {% block title %}Add{% endblock %}
 
 {% block body %}
-				
+<div class="container">		
 {{ form_start(form) }}
 
     {{form_row(form.name)}}
     {{form_row(form.lastname)}}
     {{form_row(form.contact)}}
 
-    <ul class="tags" id = "addr_id" data-prototype="{{ form_widget(form.addr.vars.prototype)|e('html_attr') }}">
-    
-    {% for row in form.addr %}
-
-        {{ form_row(row) }}
-
-    {% endfor %}
-       <script type="text/javascript">var $addTagLink = $('<button type="button" class="add_tag_link btn btn-primary" data-collection-holder-class="tags">Add a tag</button>');</script>
-
-    </ul>
+     <div class="col-sm-8 col-sm-offset-2" id="addr_id" data-prototype="{{ form_widget(form.addr.vars.prototype)|e('html_attr') }}">
+            {% for row in form.addr %}
+              <div class="panel panel-warning">
+                    <div class="panel-body">
+                        {{ form_row(row) }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
     {{form_row(form.userType)}}
     {{form_row(form.gender)}}
@@ -29,58 +28,72 @@
 
 <script type="text/javascript">
 
-var $newLinkLi = $('<li></li>').append($addTagLink);
 
-jQuery(document).ready(function() {
+var $collectionHolder;
 
-   var $collectionHolder = $('ul.tags');
-    
+var $addNewItem = $('<a href="#" class="btn btn-info">Add new item</a>');
 
-    $collectionHolder.append($newLinkLi);
-    
+$(document).ready(function () {
 
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-    
-    $addTagLink.on('click', function(e) {
+    $collectionHolder = $('#addr_id');
+
+    $collectionHolder.append($addNewItem);
+
+    $collectionHolder.data('index', $collectionHolder.find('.panel').length)
+
+    $collectionHolder.find('.panel').each(function () {
+
+        addRemoveButton($(this));
+    });
+
+    $addNewItem.click(function (e) {
 
         e.preventDefault();
-        
 
-        addTagForm($collectionHolder, $newLinkLi);
-    });
-    
-    
+        addNewForm();
+    })
 });
 
-function addTagForm($collectionHolder, $newLinkLi) {
+
+function addNewForm() {
 
     var prototype = $collectionHolder.data('prototype');
-    
 
     var index = $collectionHolder.data('index');
-    
 
-    var newForm = prototype.replace(/__name__/g, index);
-    
+    var newForm = prototype;
 
-    $collectionHolder.data('index', index + 1);
-    
+    newForm = newForm.replace(/__name__/g, index);
 
-    var $newFormLi = $('<li></li>').append(newForm);
-    
+    $collectionHolder.data('index', index+1);
 
-    $newFormLi.append('<button href="#" class="remove-tag btn btn-danger">remove</button>');
-    
-    $newLinkLi.before($newFormLi);
-    
+    var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
 
-    $('.remove-tag').click(function(e) {
+    var $panelBody = $('<div class="panel-body"></div>').append(newForm);
+
+    $panel.append($panelBody);
+
+    addRemoveButton($panel);
+
+    $addNewItem.before($panel);
+}
+
+function addRemoveButton ($panel) {
+
+    var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>');
+
+    var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+
+    $removeButton.click(function (e) {
         e.preventDefault();
-        
-        $(this).parent().remove();
-        
-        return false;
+
+        $(e.target).parents('.panel').slideUp(500, function () {
+            $(this).remove();
+        })
     });
+
+    $panel.append($panelFooter);
 }
 </script>
+</div>
 {% endblock body %}

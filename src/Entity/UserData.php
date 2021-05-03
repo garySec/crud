@@ -72,7 +72,7 @@ class UserData
     private $hobbie;
 
     /**
-     * @ORM\OneToMany(targetEntity=AddressUser::class, mappedBy="userData",cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=AddressUser::class, mappedBy="userData",cascade={"persist", "remove"})
      */
     private $addr;
 

@@ -14,6 +14,7 @@ use App\Entity\AddressUser;
 use App\Entity\ContactUser;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Doctrine\Common\Collections\ArrayCollection;
 
      /**
      * @Route("/advance", name="advance.")
@@ -72,15 +73,30 @@ class UserCrudController extends AbstractController
      */
      public function edit(Request $request,$id)
      {
-     	$post = $this->getDoctrine()->getManager()->getRepository(UserData::class)->find($id);
+     	$em = $this->getDoctrine()->getManager();
+     	$user = $em->getRepository(UserData::class)->find($id);
 
-     	$form = $this->createForm(UserDataType::class,$post);
+        $orignalAddr = new ArrayCollection();
+
+        foreach ($user->getAddr() as $addr) 
+        {
+            $orignalAddr->add($addr);
+        }
+
+     	$form = $this->createForm(UserDataType::class,$user);
      	$form->handleRequest($request);
 
      	if ($form->isSubmitted() && $form->isValid()) {
 
-     		$em = $this->getDoctrine()->getManager();
-     		$em->persist($post);
+
+             foreach ($orignalAddr as $addr) {
+
+                if ($user->getAddr()->contains($addr) === false) {
+                    $em->remove($addr);
+                }
+            }
+
+     		$em->persist($user);
      		$em->flush();
      	          
      		$this->addFlash('info', 'edited successfully');
@@ -92,7 +108,7 @@ class UserCrudController extends AbstractController
      	]);
 
      }
-/**
+    /**
      * @Route("/delete/{id}", name="delete")
      */
      public function delete($id): Response{
@@ -118,11 +134,11 @@ class UserCrudController extends AbstractController
     {
         $form = $this->createFormBuilder()
                 ->setAction($this->generateUrl('advance.result'))
-                ->add('search',TextType::class)
+                ->add('search',TextType::class,['attr'=>['placeholder' => 'Enter Name ...']])
                 ->add('save',SubmitType::class)
                 ->getForm();
 
-        return $this->render('user_crud/new.html.twig', [
+        return $this->render('user_crud/search.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -132,23 +148,35 @@ class UserCrudController extends AbstractController
      */
     public function handleSearch(PaginatorInterface $paginator,Request $request,UserDataRepository $userdata)
     {
+        // dd($request->request);
         $search = $request->request->get('form')['search'];
-        // $data = $userdata->findBy(
-        //             array('name'=>$search),
-        //             array('contact'=>$search),
-        //         );
+
+        $data = $userdata->findBy(
+                    ['name'=>$search],
+                    // ['lastname'=>$search],
+                );
+        
+            // $data = $userdata->findAll($search);
 
 
-        $data = $userdata->findAll($search);
         $posts = $paginator->paginate(
             $data,
             $request->query->getInt('page',1),
-            // $request->query->getInt('limit',5)
+                $request->query->getInt('limit',5)
         );
+
+        // dd($data);
+
+        if ($data == NULL) {
+
+        $this->addFlash('info', 'Data not Exist!');
+        return $this->redirect($this->generateUrl('advance.index'));
+        }
 
         return $this->render('user_crud/index.html.twig',[
             'posts' => $posts
         ]);
 
     }
+
 }
