@@ -15,8 +15,7 @@ class UserType
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", length=2)
      */
     private $id;
 
@@ -35,6 +34,12 @@ class UserType
         $this->user = new ArrayCollection();
     }
 
+    public function setId(int $id): ?int
+    {
+        $this->id = $id;
+        return $id;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

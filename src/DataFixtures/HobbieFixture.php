@@ -10,14 +10,33 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class HobbieFixture extends Fixture 
 {
-    public function load(ObjectManager $manager)
-    {
-        $HobbieQuery = "INSERT INTO `user_hobbie` (`id`, `hobbie`) VALUES ('1', 'Cricket'),('2', 'Base-ball'),('3', 'Wally-ball'),('4', 'hockey'),('5', 'Drawing'),('6', 'Etc.');";
-        $manager->getConnection()->exec($HobbieQuery);
+	
+	public function load(ObjectManager $em)
+	{	
+		$hobbie = array('hobbie','Cricket','Base-ball','Wally-ball','hockey','Drawing','Etc.');
+		$type = array('Admin','Customer','Supllier','Visiter');
 
-        $TypeQuery = "INSERT INTO `user_type` (`id`, `type`) VALUES ('1', 'Admin'),('2', 'Customer'),('3', 'Supllier'),('4', 'Visiter');";
-        $manager->getConnection()->exec($TypeQuery);
+		$y = 0;
+		for ($i=1; $i <=6 ; $i++) 
+		{
+			$UserHobbie = new UserHobbie();
+			$UserHobbie->setId($i);
+			$UserHobbie->setHobbie($hobbie[$y]);
+			$em->persist($UserHobbie);
+			$y += 1;
+		}
 
-        $manager->flush();
-    }       
+
+		$x = 0;
+		for ($i=1; $i <= 4; $i++) { 
+			
+			$UserType = new UserType();
+			$UserType->setId($i);
+			$UserType->setType($type[$x]);
+			$em->persist($UserType);
+			$x += 1;
+		}
+
+		$em->flush();
+	}
 }

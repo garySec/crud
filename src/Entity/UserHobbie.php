@@ -14,8 +14,7 @@ class UserHobbie
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", length=2)
      */
     private $id;
 
@@ -32,6 +31,12 @@ class UserHobbie
     public function __construct()
     {
         $this->user = new ArrayCollection();
+    }
+
+    public function setId(int $id): ?int
+    {
+        $this->id = $id;
+        return $id;
     }
 
     public function getId(): ?int
