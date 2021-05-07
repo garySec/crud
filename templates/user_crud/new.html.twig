@@ -12,8 +12,8 @@
 
      <div class="col-sm-8 col-sm-offset-2" id="addr_id" data-prototype="{{ form_widget(form.addr.vars.prototype)|e('html_attr') }}">
             {% for row in form.addr %}
-              <div class="panel panel-warning">
-                    <div class="panel-body">
+              <div class="card card-warning">
+                    <div class="card-body">
                         {{ form_row(row) }}
                     </div>
                 </div>
@@ -27,8 +27,6 @@
 {{ form_end(form) }}
 
 <script type="text/javascript">
-
-
 var $collectionHolder;
 
 var $addNewItem = $('<a href="#" class="btn btn-info">Add new item</a>');
@@ -39,9 +37,9 @@ $(document).ready(function () {
 
     $collectionHolder.append($addNewItem);
 
-    $collectionHolder.data('index', $collectionHolder.find('.panel').length)
+    $collectionHolder.data('index', $collectionHolder.find('.card').length)
 
-    $collectionHolder.find('.panel').each(function () {
+    $collectionHolder.find('.card').each(function () {
 
         addRemoveButton($(this));
     });
@@ -67,32 +65,32 @@ function addNewForm() {
 
     $collectionHolder.data('index', index+1);
 
-    var $panel = $('<div class="panel panel-warning"><div class="panel-heading"></div></div>');
+    var $card = $('<div class="card m-3"></div>');
 
-    var $panelBody = $('<div class="panel-body"></div>').append(newForm);
+    var $cardBody = $('<div class="card-body"></div>').append(newForm);
 
-    $panel.append($panelBody);
+    $card.append($cardBody);
 
-    addRemoveButton($panel);
+    addRemoveButton($card);
 
-    $addNewItem.before($panel);
+    $addNewItem.before($card);
 }
 
-function addRemoveButton ($panel) {
+function addRemoveButton ($card) {
 
     var $removeButton = $('<a href="#" class="btn btn-danger">Remove</a>');
 
-    var $panelFooter = $('<div class="panel-footer"></div>').append($removeButton);
+    var $cardFooter = $('<div class="card-footer"></div>').append($removeButton);
 
     $removeButton.click(function (e) {
         e.preventDefault();
 
-        $(e.target).parents('.panel').slideUp(500, function () {
+        $(e.target).parents('.card').slideUp(500, function () {
             $(this).remove();
         })
     });
 
-    $panel.append($panelFooter);
+    $card.append($cardFooter);
 }
 </script>
 </div>
