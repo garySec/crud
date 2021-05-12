@@ -28,8 +28,7 @@ class AddressUser
 
     /**
     * @Assert\Regex(
-    *     pattern="/[a-zA-Z]+/i",
-    *     match=true,
+    *     pattern="/^[a-zA-Z]+$/i",
     *     message="Your name cannot contain a number"
     * )
      * @Assert\NotBlank

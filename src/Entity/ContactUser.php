@@ -20,23 +20,24 @@ class ContactUser
     private $id;
 
     /**
-     * @Assert\Range(
-     *      min = 10,
-     *      max = 10,
-     *      notInRangeMessage = "Number must be {{ min }}."
-     * )
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=255)
-     */
+    * @Assert\Length(
+    *      min = 10,
+    *      max = 10,
+    *      minMessage = "Your Mobile must be at least {{ limit }} characters long",
+    *      maxMessage = "Your Mobile cannot be longer than {{ limit }} characters"
+    * )
+    *@Assert\NotBlank
+    * @ORM\Column(type="string", length=255)
+    */
     private $mobile;
 
     /**
     * @Assert\Email(
     *     message = "The email '{{ value }}' is not a valid email."
     * )
-    * @Assert\NotBlank 
-     * @ORM\Column(type="string", length=255)
-     */
+    *@Assert\NotBlank 
+    * @ORM\Column(type="string", length=255)
+    */
     private $email;
 
     /**

@@ -148,7 +148,7 @@ class UserCrudController extends AbstractController
      */
     public function handleSearch(PaginatorInterface $paginator,Request $request,UserDataRepository $userdata)
     {
-        // dd($request->request);
+
         $search = $request->request->get('form')['search'];
 
         $data = $userdata->findBy(
@@ -164,8 +164,6 @@ class UserCrudController extends AbstractController
             $request->query->getInt('page',1),
                 $request->query->getInt('limit',5)
         );
-
-        // dd($data);
 
         if ($data == NULL) {
 

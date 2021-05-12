@@ -21,21 +21,20 @@ class UserData
      */
     private $id;
 
-    /**
-     * @Assert\Regex(
-     *     pattern="/[a-zA-Z]+/i",
-     *     match=true,
-     *     message="Your name cannot contain a number"
-     * )
-     * @Assert\NotBlank
-     * @ORM\Column(type="string", length=255)
-     */
+     /**
+    * @Assert\Regex(
+    *     pattern="/^[a-zA-Z]+$/i",
+    *     message="Your Name cannot contain a number"
+    * )
+    * @Assert\Type("string")
+    * @Assert\NotBlank
+    * @ORM\Column(type="string", length=255)
+    */
     private $name;
 
     /**
      * @Assert\Regex(
-     *     pattern="/[a-zA-Z]+/i",
-     *     match=true,
+     *     pattern="/^[a-zA-Z]+$/i",
      *     message="Your lastname cannot contain a number"
      * )
      * @Assert\NotBlank
@@ -53,7 +52,7 @@ class UserData
     /**
      * @ORM\OneToOne(targetEntity="ContactUser", inversedBy="user", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="contanct_id",nullable=false,referencedColumnName="id")
-     * @Assert\Valid(traverse=true)
+     * @Assert\Valid()
      */
     private $contact;
 
@@ -65,7 +64,7 @@ class UserData
     private $userType;
 
     /**
-     * @Assert\Valid
+     * @Assert\Valid()
      * @ORM\ManyToMany(targetEntity=UserHobbie::class, inversedBy="user")
      * @ORM\JoinColumn(name="hobbie_id", referencedColumnName="id")
      */
@@ -73,6 +72,7 @@ class UserData
 
     /**
      * @ORM\OneToMany(targetEntity=AddressUser::class, mappedBy="userData",cascade={"persist", "remove"})
+     * Assert/Valid()
      */
     private $addr;
 

@@ -3,24 +3,26 @@
 {% block title %}Add{% endblock %}
 
 {% block body %}
-<div class="container">		
-{{ form_start(form) }}
+<div class="container">
+{{ form_start(form, {'attr':{'class':'col-8'}}) }}
 
     {{form_row(form.name)}}
     {{form_row(form.lastname)}}
-    {{form_row(form.contact)}}
+    {{form_widget(form.contact) }}
 
      <div class="col-sm-8 col-sm-offset-2" id="addr_id" data-prototype="{{ form_widget(form.addr.vars.prototype)|e('html_attr') }}">
-            {% for row in form.addr %}
-              <div class="card card-warning">
+        {% for row in form.addr %}
+                <div class="card">
+                    <div class="card-header">
+                        <strong>Address</strong>
+                    </div>
                     <div class="card-body">
                         {{ form_row(row) }}
                     </div>
                 </div>
             {% endfor %}
-        </div>
-
-    {{form_row(form.userType)}}
+     </div>
+    {{form_row(form.userType)}}	
     {{form_row(form.gender)}}
     {{form_row(form.hobbie)}}
 
@@ -29,7 +31,7 @@
 <script type="text/javascript">
 var $collectionHolder;
 
-var $addNewItem = $('<a href="#" class="btn btn-info">Add new item</a>');
+var $addNewItem = $('<a href="#" class="btn btn-info m-3">Add new item</a>');
 
 $(document).ready(function () {
 
@@ -48,7 +50,7 @@ $(document).ready(function () {
 
         e.preventDefault();
 
-        addNewForm();
+            addNewForm();
     })
 });
 
@@ -65,7 +67,7 @@ function addNewForm() {
 
     $collectionHolder.data('index', index+1);
 
-    var $card = $('<div class="card m-3"></div>');
+    var $card = $('<div class="card m-3"><div class="card-header">Address</div></div>');
 
     var $cardBody = $('<div class="card-body"></div>').append(newForm);
 
