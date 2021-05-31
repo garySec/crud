@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\UserData;
+use App\Entity\Contact;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method UserData|null find($id, $lockMode = null, $lockVersion = null)
@@ -47,4 +50,17 @@ class UserDataRepository extends ServiceEntityRepository
         ;
     }
     */
+   
+   public function findBynameOrContact(string $data)
+   {
+       $qb = $this->createQueryBuilder('u');
+       $qb
+            ->innerJoin('u.contact', 'p')
+            ->where('u.name =:search')
+            ->orwhere('p.mobile = :search')
+            ->orwhere('p.email = :search')
+            ->setParameter('search', $data);
+
+        return $qb->getQuery()->getResult();
+   }
 }

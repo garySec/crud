@@ -134,7 +134,7 @@ class UserCrudController extends AbstractController
     {
         $form = $this->createFormBuilder()
                 ->setAction($this->generateUrl('advance.result'))
-                ->add('search',TextType::class,['attr'=>['placeholder' => 'Enter Name ...']])
+                ->add('search',TextType::class,['attr'=>['placeholder' => 'Enter Name,Mobile,Email...']])
                 ->add('save',SubmitType::class)
                 ->getForm();
 
@@ -150,9 +150,9 @@ class UserCrudController extends AbstractController
     {
 
         $search = $request->request->get('form')['search'];
-
-        $data = $userdata->findBy(
-                    ['name'=>$search],
+        $data = $userdata->findBynameOrContact(
+                    $search
+                    // ['name'=>$search],
                     // ['lastname'=>$search],
                 );
         

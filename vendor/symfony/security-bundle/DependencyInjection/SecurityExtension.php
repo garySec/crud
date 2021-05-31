@@ -132,6 +132,8 @@ class SecurityExtension extends Extension implements PrependExtensionInterface
         $loader->load('collectors.php');
         $loader->load('guard.php');
 
+        $container->getDefinition('data_collector.security')->addArgument($this->authenticatorManagerEnabled);
+
         if ($container->hasParameter('kernel.debug') && $container->getParameter('kernel.debug')) {
             $loader->load('security_debug.php');
         }
@@ -872,7 +874,7 @@ class SecurityExtension extends Extension implements PrependExtensionInterface
             foreach ($ips as $ip) {
                 $container->resolveEnvPlaceholders($ip, null, $usedEnvs);
 
-                if (!$usedEnvs && !$this->isValidIp($ip)) {
+                if (!$usedEnvs && !$this->isValidIps($ip)) {
                     throw new \LogicException(sprintf('The given value "%s" in the "security.access_control" config option is not a valid IP address.', $ip));
                 }
 
@@ -928,6 +930,25 @@ class SecurityExtension extends Extension implements PrependExtensionInterface
     {
         // first assemble the factories
         return new MainConfiguration($this->factories, $this->userProviderFactories);
+    }
+
+    private function isValidIps($ips): bool
+    {
+        $ipsList = array_reduce((array) $ips, static function (array $ips, string $ip) {
+            return array_merge($ips, preg_split('/\s*,\s*/', $ip));
+        }, []);
+
+        if (!$ipsList) {
+            return false;
+        }
+
+        foreach ($ipsList as $cidr) {
+            if (!$this->isValidIp($cidr)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private function isValidIp(string $cidr): bool
